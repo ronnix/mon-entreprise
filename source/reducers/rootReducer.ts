@@ -1,19 +1,13 @@
 import { Action } from 'Actions/actions'
-import { Unit } from 'Engine/units'
 import { defaultTo, omit, without } from 'ramda'
 import reduceReducers from 'reduce-reducers'
 import { combineReducers, Reducer } from 'redux'
 import originRules, { Rules } from 'Rules'
 import { SavedSimulation } from 'Selectors/storageSelectors'
-import i18n, { AvailableLangs } from '../i18n'
 import { DottedName } from './../rules/index'
 import { objectifsSelector } from '../selectors/simulationSelectors'
 import inFranceAppReducer, { Company } from './inFranceAppReducer'
 import storageRootReducer from './storageReducer'
-
-function rules(state: Rules = originRules) {
-	return state
-}
 
 function explainedVariable(
 	state: DottedName | null = null,
@@ -27,13 +21,6 @@ function explainedVariable(
 		default:
 			return state
 	}
-}
-
-type Example = null | {
-	name: string
-	situation: object
-	dottedName: DottedName
-	defaultUnit?: Unit
 }
 
 function situationBranch(state: number | null = null, action: Action) {
@@ -64,13 +51,16 @@ type QuestionsKind =
 
 export type SimulationConfig = {
 	objectifs:
-		| Array<DottedName>
-		| Array<{ icône: string; nom: string; objectifs: Array<DottedName> }>
+		| ReadonlyArray<DottedName>
+		| ReadonlyArray<{
+				icône: string
+				nom: string
+				objectifs: ReadonlyArray<DottedName>
+		  }>
 	situation: Simulation['situation']
 	bloquant?: Array<DottedName>
 	questions?: Partial<Record<QuestionsKind, Array<DottedName>>>
 	branches?: Array<{ nom: string; situation: SimulationConfig['situation'] }>
-	'unité par défaut': string
 }
 
 type Situation = Partial<Record<DottedName, any>>
