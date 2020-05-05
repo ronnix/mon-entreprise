@@ -57,7 +57,8 @@ const sitePathsFr = {
 		'auto-entrepreneur': '/auto-entrepreneur',
 		comparaison: '/comparaison-régimes-sociaux',
 		salarié: '/salarié',
-		'artiste-auteur': '/artiste-auteur'
+		'artiste-auteur': '/artiste-auteur',
+		maternité: '/maternité'
 	},
 	économieCollaborative: {
 		index: '/économie-collaborative',
@@ -101,6 +102,7 @@ const sitePathsEn = {
 		déclarationIndépendant: '/declaration-aid-independent'
 	},
 	simulateurs: {
+		...sitePathsFr.simulateurs,
 		index: '/simulators',
 		'assimilé-salarié': '/assimile-salarie',
 		indépendant: '/independant',
