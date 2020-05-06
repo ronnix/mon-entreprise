@@ -18,7 +18,6 @@ export default function CurrencyInput({
 	debounce: debounceTimeout,
 	currencySymbol = '€',
 	onChange,
-	onSubmit,
 	language,
 	className,
 	...forwardedProps
