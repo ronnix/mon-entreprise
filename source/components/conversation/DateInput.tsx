@@ -4,7 +4,6 @@ import { Rule } from 'Engine/types'
 import React, { useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import InputSuggestions from './InputSuggestions'
-import SendButton from './SendButton'
 
 type DateInputProps = {
 	onChange: RuleInputProps['onChange']
@@ -58,7 +57,6 @@ export default function DateInput({
 					onChange={handleDateChange}
 				/>
 			</div>
-			{onSubmit && <SendButton disabled={!dateValue} onSubmit={onSubmit} />}
 		</div>
 	)
 }

@@ -2,7 +2,6 @@ import Input from 'Components/conversation/Input'
 import Question from 'Components/conversation/Question'
 import SelectGéo from 'Components/conversation/select/SelectGeo'
 import SelectAtmp from 'Components/conversation/select/SelectTauxRisque'
-import SendButton from 'Components/conversation/SendButton'
 import CurrencyInput from 'Components/CurrencyInput/CurrencyInput'
 import PercentageField from 'Components/PercentageField'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
@@ -119,7 +118,6 @@ export default function RuleInput({
 					className="targetInput"
 					onChange={evt => onChange(evt.target.value)}
 				/>
-				{onSubmit && <SendButton disabled={!value} onSubmit={onSubmit} />}
 			</>
 		)
 	}
