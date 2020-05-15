@@ -49,8 +49,8 @@ export type ParsedRule<Name extends string = string> = Rule & {
 	formule?: any
 	evaluate?: Function
 	explanation?: any
-	isDisabledBy?: Array<any>
-	replacedBy?: Array<any>
+	isDisabledBy: Array<any>
+	replacedBy: Array<any>
 	rulePropType?: string
 	jsx?: Function
 	cotisation?: Partial<{
