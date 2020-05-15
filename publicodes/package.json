@@ -2,13 +2,21 @@
 	"name": "publicodes",
 	"version": "1.0.0",
 	"description": "A declarative language for encoding public algorithm",
-	"main": "source/index.ts",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/betagouv/mon-entreprise.git",
 		"directory": "publicodes"
 	},
+	"bugs": "https://github.com/betagouv/publicodes",
+	"homepage": "https://publi.codes/",
 	"license": "MIT",
+	"files": [
+		"dist/index.js",
+		"dist/index.d.ts",
+		"dist/images"
+	],
 	"private": false,
 	"dependencies": {
 		"classnames": "^2.2.6",
@@ -26,7 +34,11 @@
 		"react-router-hash-link": "^1.2.2"
 	},
 	"scripts": {
+		"compile": "compile:type && yarn run webpack --config webpack.config.js",
 		"test:file": "yarn mocha-webpack --webpack-config ../webpack.test.js --include test/setupIntl.js --require source-map-support/register ",
 		"test": "yarn test:file \"./{,!(node_modules)/**/}!(webpack).test.js\""
+	},
+	"engines": {
+		"node": ">=12.16.1"
 	}
 }

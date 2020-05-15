@@ -5,152 +5,7 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const { EnvironmentPlugin } = require('webpack')
 const path = require('path')
 
-module.exports.default = {
-	resolve: {
-		alias: {
-			Actions: path.resolve('source/actions/'),
-			Components: path.resolve('source/components/'),
-			Selectors: path.resolve('source/selectors/'),
-			Reducers: path.resolve('source/reducers/'),
-			Types: path.resolve('source/types/'),
-			Rules: path.resolve('source/rules/'),
-			Images: path.resolve('source/images/')
-		},
-		extensions: ['.js', '.ts', '.tsx']
-	},
-	entry: {
-		'mon-entreprise': './source/sites/mon-entreprise.fr/entry.fr.tsx',
-		infrance: './source/sites/mon-entreprise.fr/entry.en.tsx',
-		'simulateur-iframe-integration':
-			'./source/sites/mon-entreprise.fr/iframe-integration-script.js',
-		publicodes: './source/sites/publi.codes/entry.tsx'
-	},
-	output: {
-		path: path.resolve('./dist/'),
-		globalObject: 'self'
-	},
-	plugins: [
-		new MonacoWebpackPlugin(),
-
-		new EnvironmentPlugin({
-			EN_SITE: '/infrance${path}',
-			FR_SITE: '/mon-entreprise${path}'
-		}),
-
-		new EnvironmentPlugin({ HEAD: '', COMMIT_REF: '' }),
-
-		new CopyPlugin([
-			'./manifest.webmanifest',
-			{
-				from: './source/sites/mon-entreprise.fr/robots.txt',
-				to: 'robots.infrance.txt'
-			},
-			{
-				from: './source/sites/mon-entreprise.fr/sitemap.fr.txt',
-				to: 'sitemap.infrance.fr.txt'
-			},
-			{
-				from: './source/sites/mon-entreprise.fr/sitemap.en.txt',
-				to: 'sitemap.infrance.en.txt'
-			},
-			{
-				from: './source/images',
-				to: 'images'
-			},
-			{
-				from: './source/data',
-				to: 'data'
-			},
-			{
-				from: './source/sites/mon-entreprise.fr/favicon',
-				to: 'favicon'
-			}
-		])
-	]
-}
-
-module.exports.styleLoader = styleLoader => ({
-	test: /\.css$/,
-	use: [
-		{ loader: styleLoader },
-		{
-			loader: 'css-loader',
-			options: {
-				sourceMap: true,
-				importLoaders: 1
-			}
-		},
-		{
-			loader: 'postcss-loader'
-		}
-	]
-})
-
-module.exports.commonLoaders = ({ legacy = false } = {}) => {
-	const babelLoader = {
-		loader: 'babel-loader',
-		options: {
-			cacheDirectory: true,
-			rootMode: 'upward',
-			presets: [
-				[
-					'@babel/preset-env',
-					{
-						targets: !legacy
-							? {
-									esmodules: true
-							  }
-							: {
-									esmodules: false,
-									browsers: ['ie 11']
-							  },
-						useBuiltIns: 'entry',
-						corejs: '3'
-					}
-				]
-			]
-		}
-	}
-
-	return [
-		{
-			test: /\.(js|ts|tsx)$/,
-			loader: babelLoader,
-			exclude: /node_modules(?!\/publicodes)|dist/
-		},
-		{
-			test: /\.(jpe?g|png|svg)$/,
-			use: {
-				loader: 'file-loader',
-				options: {
-					name: 'images/[name].[ext]'
-				}
-			}
-		},
-		{
-			test: /\.yaml$/,
-			use: ['json-loader', 'yaml-loader']
-		},
-		{
-			test: /\.toml$/,
-			use: ['toml-loader']
-		},
-		{
-			test: /\.ne$/,
-			use: [babelLoader, 'nearley-loader']
-		},
-		{
-			test: /\.md$/,
-			use: ['raw-loader']
-		},
-		{
-			test: /\.ttf$/,
-			use: ['file-loader']
-		}
-	]
-}
-
-module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
+const HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
 		inject: false,
@@ -191,3 +46,64 @@ module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 		logo: 'https://mon-entreprise.fr/images/illustration.svg'
 	})
 ]
+module.exports.default = {
+	resolve: {
+		alias: {
+			Actions: path.resolve('source/actions/'),
+			Components: path.resolve('source/components/'),
+			Selectors: path.resolve('source/selectors/'),
+			Reducers: path.resolve('source/reducers/'),
+			Types: path.resolve('source/types/'),
+			Rules: path.resolve('source/rules/'),
+			Images: path.resolve('source/images/')
+		},
+		extensions: ['.js', '.ts', '.tsx']
+	},
+	entry: {
+		'mon-entreprise': './source/sites/mon-entreprise.fr/entry.fr.tsx',
+		infrance: './source/sites/mon-entreprise.fr/entry.en.tsx',
+		'simulateur-iframe-integration':
+			'./source/sites/mon-entreprise.fr/iframe-integration-script.js',
+		publicodes: './source/sites/publi.codes/entry.tsx'
+	},
+	output: {
+		globalObject: 'self'
+	},
+	plugins: [
+		new MonacoWebpackPlugin(),
+		new EnvironmentPlugin({
+			EN_SITE: '/infrance${path}',
+			FR_SITE: '/mon-entreprise${path}'
+		}),
+		new EnvironmentPlugin({ HEAD: '', COMMIT_REF: '' }),
+		new CopyPlugin([
+			'./manifest.webmanifest',
+			{
+				from: './source/sites/mon-entreprise.fr/robots.txt',
+				to: 'robots.infrance.txt'
+			},
+			{
+				from: './source/sites/mon-entreprise.fr/sitemap.fr.txt',
+				to: 'sitemap.infrance.fr.txt'
+			},
+			{
+				from: './source/sites/mon-entreprise.fr/sitemap.en.txt',
+				to: 'sitemap.infrance.en.txt'
+			},
+			{
+				from: './source/images',
+				to: 'images'
+			},
+			{
+				from: './source/data',
+				to: 'data'
+			},
+			{
+				from: './source/sites/mon-entreprise.fr/favicon',
+				to: 'favicon'
+			}
+		])
+	]
+}
+
+module.exports.HTMLPlugins = HTMLPlugins

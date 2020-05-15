@@ -15,5 +15,6 @@
 			"Types/*": ["types/*"]
 		}
 	},
-	"include": ["source"]
+	"include": ["source/index.ts"],
+	"noEmit": true
 }

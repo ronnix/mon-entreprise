@@ -1,8 +1,7 @@
+/* eslint-env node */
+
 const webpack = require('webpack')
-const {
-	default: common,
-	commonLoaders
-} = require('./mon-entreprise/webpack.common')
+const { commonLoaders } = require('./common')
 
 module.exports = {
 	...common,
