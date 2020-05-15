@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Trans } from 'react-i18next'
 import Engine from '../..'
 import { formatValue } from '../../format'
-import mecanisms from '../../mecanisms.yaml'
 import { serializeUnit } from '../../units'
 import { Markdown } from '../Markdown'
 import { RuleLinkWithContext } from '../RuleLink'
@@ -12,16 +11,9 @@ import References from './References'
 
 // let LazySource = React.lazy(() => import('../../../../mon-entreprise/source/components/RuleSource'))
 
-export default function Rule({
-	dottedName,
-	useDefaultValues,
-	engine,
-	language
-}) {
-	const rule = engine.evaluate(dottedName, {
-		useDefaultValues
-	})
-	const [viewSource, setViewSource] = useState(false)
+export default function Rule({ dottedName, engine, language }) {
+	const rule = engine.evaluate(dottedName)
+	const isSetInStituation = engine.situation[dottedName] !== undefined
 	const { description, question } = rule
 
 	return (
@@ -40,7 +32,9 @@ export default function Rule({
 							padding: '1rem'
 						}}
 					>
-						{rule.nodeValue != null && (
+						{((rule.defaultValue?.nodeValue == null &&
+							rule.nodeValue != null) ||
+							(rule.defaultValue?.nodeValue != null && isSetInStituation)) && (
 							<>
 								{formatValue({ ...rule, language })}
 								<br />
